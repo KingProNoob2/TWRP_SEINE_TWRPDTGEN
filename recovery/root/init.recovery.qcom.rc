@@ -1,14 +1,12 @@
+import /init.recovery.qcom_decrypt.rc
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    chmod 0660 /dev/qseecom
-    chown system drmrpc /dev/qseecom
-    chmod 0664 /dev/ion
-    chown system system /dev/ion
-    install_keyring
 on early-fs
     start vold
-    
+service hwservicemanager /system/bin/hwservicemanager
+    user root
+    group root
 on init
     write /sys/class/backlight/panel0-backlight/brightness 200
     setprop sys.usb.configfs 1
